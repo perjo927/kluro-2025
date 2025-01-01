@@ -38,8 +38,8 @@ const Modal = ({
     );
 };
 
-const getGameOverMessage = (reason, reasons) => {
-    return "Spelet är över"
+const getGameOverMessage = (isWon) => {
+    return isWon ? "Grattis!" : "Spelet är över"
 }
 
 // Specialized Game Over Modal
@@ -48,6 +48,8 @@ export const GameOverModal = ({
     onShare,
     isOpen,
     onClose,
+    isWon,
+    word
 }) => {
     return (
         <Modal
@@ -56,18 +58,19 @@ export const GameOverModal = ({
         >
             <header className="modal-header">
 
-                <h2>{getGameOverMessage()}</h2>
+                <h2>{getGameOverMessage(isWon)}</h2>
                 <button className="modal-close" onClick={onClose}>×</button>
             </header>
 
             <div className='modal-broadcast'>
-                <p>Nästa spel börjar om:</p>
+                <p>Nästa spel börjar om</p>
                 <Countdown />
             </div>
 
             <div className="modal-content">
-                Dagens ord: TODO: gameState
-                Länk
+                Dagens ord <a href={`https://svenska.se/tre/?sok=${word}`} target="_blank" className='daily'>
+                    {word}
+                </a>
             </div>
 
             <footer className="modal-footer">

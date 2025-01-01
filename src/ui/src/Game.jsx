@@ -7,6 +7,14 @@ import { useToast } from './ToastContext.jsx';
 import About from './components/About.jsx';
 import WordleEngine from '../../lib/engine.js';
 import Keyboard from './components/Keyboard.jsx';
+import Confetti from './components/Confetti.jsx';
+
+const ANIMATION_TIMINGS = {
+    LETTER_REVEAL_DELAY: 200,  // Delay between each letter
+    FLIP_DURATION: 600,        // Duration of flip animation
+    BOUNCE_DURATION: 500,      // Duration of bounce animation
+    BUFFER: 500               // Safety buffer
+};
 
 class Kluro {
     constructor() {
@@ -37,18 +45,26 @@ class Kluro {
         const won = state.isWon;
         const date = new Date().toLocaleDateString();
 
-        // TODO: also fill empty grid rows
-        // Create emoji grid
-        const grid = state.grid.map(row =>
-            row.map(cell => {
-                switch (cell.status) {
-                    case 'correct': return '🟩';
-                    case 'present': return '🟨';
-                    case 'absent': return '⬛';
-                    default: return '⬜';
-                }
-            }).join('')
-        ).join('\n');
+        const cells = Array(6).fill(null).map(() =>
+            Array(5).fill(null)
+        );
+
+        const grid = cells.map((row, rowIndex) => {
+            const gridRow = state.grid[rowIndex];
+            if (gridRow) {
+                const newRow = gridRow.map(cell => {
+                    switch (cell.status) {
+                        case 'correct': return '🟩';
+                        case 'present': return '🟨';
+                        case 'absent': return '⬛';
+                        default: return '⬜';
+                    }
+                }).join('')
+                return newRow
+            }
+            return '⬛⬛⬛⬛⬛'
+        }).join(("\n"))
+
 
         return `
 🅺🅻🆄🆁🅾 ${date} #${this.gameDay}
@@ -68,6 +84,7 @@ function GameContainer() {
     const [activeMarker, setActiveMarker] = useState([0, 0]);
     const [isWon, setIsWon] = useState(false);
     const [currentGuess, setCurrentGuess] = useState("");
+    const [showConfetti, setShowConfetti] = useState(false);
 
     const toast = useToast();
 
@@ -114,6 +131,38 @@ function GameContainer() {
             });
     }
 
+    const handleGameOver = (newState) => {
+        // Calculate total animation duration:
+        // - 200ms delay between each letter (5 letters = 1000ms total)
+        // - 600ms for the flip animation of the last letter
+        // - 500ms for the bounce animation
+        // Add a small buffer of 100ms for safety
+        const totalAnimationDuration =
+            (5 * ANIMATION_TIMINGS.LETTER_REVEAL_DELAY) +
+            ANIMATION_TIMINGS.FLIP_DURATION +
+            ANIMATION_TIMINGS.BOUNCE_DURATION +
+            ANIMATION_TIMINGS.BUFFER;
+
+        // Update the game state immediately
+        setGameState(newState);
+        setCurrentRow(newState.currentRow);
+        setIsWon(newState.isWon);
+
+        // Trigger confetti slightly before the modal appears
+        if (newState.isWon) {
+            setTimeout(() => {
+                setShowConfetti(true);
+                // Reset confetti after animation
+                setTimeout(() => setShowConfetti(false), 2000);
+            }, 750);
+        }
+
+        // Delay showing the game over modal
+        setTimeout(() => {
+            setShowGameOver(true);
+        }, totalAnimationDuration);
+    };
+
     const onBack = () => {
         if (currentGuess.length > 0) {
             const newGuess = currentGuess.slice(0, -1);
@@ -123,17 +172,17 @@ function GameContainer() {
     }
 
     const onEnter = () => {
-        // handleGuess if length is 5
-
         // Only allow submission of complete words
         if (currentGuess.length !== 5) {
             toast('Ordets längd måste vara 5 bokstäver', 'error');
+            shakeCurrentRow();
             return;
         }
 
         // Validate word
         if (!WordleEngine.validateWord(currentGuess)) {
             toast('Ordet finns inte i ordlistan', 'error');
+            shakeCurrentRow();
             return;
         }
 
@@ -141,15 +190,19 @@ function GameContainer() {
             // Make the guess
             const newState = game.makeGuess(currentGuess);
 
-            // Update all related state
-            setGameState(newState);
-            setCurrentRow(newState.currentRow);
-            setShowGameOver(newState.isComplete);
-            setIsWon(newState.isWon);
+            // Instead of updating everything immediately,
+            // use our new handler for game over state
+            if (newState.isComplete) {
+                handleGameOver(newState);
+            } else {
+                // For non-game-over states, update immediately
+                setGameState(newState);
+                setCurrentRow(newState.currentRow);
+            }
 
-            // Reset current guess
             setCurrentGuess("");
             setActiveMarker([newState.currentRow, 0]);
+            localStorage.setItem('gameState', game.getSerializableState());
 
             // Save game state (you might want to add this functionality)
             localStorage.setItem('gameState', game.getSerializableState());
@@ -181,10 +234,21 @@ function GameContainer() {
 
     }
 
+    const shakeCurrentRow = () => {
+        const currentRowElement = document.querySelector(`.game-row:nth-child(${currentRow + 1})`);
+        currentRowElement.classList.add('shake');
+
+        // Remove the shake class after animation completes
+        setTimeout(() => {
+            currentRowElement.classList.remove('shake');
+        }, 500);
+    };
+
     if (!gameState) return null;
 
     return (
         <>
+            <Confetti isActive={showConfetti} />
             <Header
                 onShowAbout={() => setShowAbout(true)}
             />
@@ -215,6 +279,8 @@ function GameContainer() {
                 onClose={() => setShowGameOver(false)}
                 gameState={gameState}
                 onShare={handleShareResult}
+                isWon={isWon}
+                word={game.dailyWord}
             />
         </>
     );

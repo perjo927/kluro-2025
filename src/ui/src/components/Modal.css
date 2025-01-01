@@ -72,7 +72,21 @@
 
 /* Content Styles */
 .modal-content {
-  margin-bottom: 1.5rem;
+  margin: 2rem 0;
+  font-size: 2rem;
+  display: grid;
+  place-items: center;
+
+  .daily {
+    cursor: pointer;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--color-tertiary);
+
+    &:hover {
+      color: var(--color-quartiary);
+    }
+  }
 }
 
 /* Footer Styles */

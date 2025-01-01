@@ -115,6 +115,29 @@
   border-radius: calc(var(--letter-radius) - 2px);
   transition: var(--transition-bounce);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.letter.reveal {
+  animation: flipIn 0.6s ease-in-out forwards;
+}
+
+.letter.pending-reveal {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+}
+
+.letter.revealing {
+  animation: flipIn 0.6s ease-in-out forwards;
+}
+
+.game-row.shake {
+  animation: invalidShake 0.5s ease-in-out;
+}
+
+.game-row.bounce {
+  animation: rowBounce 0.5s ease-in-out;
 }
 
 /* Add responsive design */
@@ -124,20 +147,56 @@
   }
 }
 
-/* @keyframes rotate {
-  0% {
-    transform: rotatex(125deg);
-  }
-  100% {
-    transform: rotatex(0deg);
-  }
-} */
-
 @keyframes activePulse {
   0% {
     border-bottom: 0.1em solid #538d4e;
   }
   100% {
     border-bottom: 0.1em solid #3a3a3c;
+  }
+}
+@keyframes flipIn {
+  0% {
+    transform: rotateX(0deg) scale(1);
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+  45% {
+    transform: rotateX(-90deg) scale(1.1);
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+  55% {
+    transform: rotateX(-90deg) scale(1.1);
+  }
+  100% {
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes rowBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes invalidShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
   }
 }
