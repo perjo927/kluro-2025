@@ -1,0 +1,121 @@
+.game-header {
+  z-index: 1000;
+  background-color: var(--color-surface);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.game-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: #acacac;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.menu-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: transparent;
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+
+.menu-icon,
+.menu-icon:before,
+.menu-icon:after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 24px;
+  background-color: var(--color-text);
+  transition: var(--transition-smooth);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.menu-icon {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu-icon:before {
+  top: -8px;
+}
+.menu-icon:after {
+  bottom: -8px;
+}
+
+.menu-button.active .menu-icon {
+  background-color: transparent;
+}
+
+.menu-button.active .menu-icon:before {
+  transform: translate(-50%, 8px) rotate(45deg);
+}
+
+.menu-button.active .menu-icon:after {
+  transform: translate(-50%, -8px) rotate(-45deg);
+}
+
+.menu-panel {
+  position: fixed;
+  top: 3.5rem;
+  right: 0;
+  bottom: 0;
+  width: 280px;
+  background-color: var(--color-surface);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.menu-panel.open {
+  transform: translateX(0);
+}
+
+.menu-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  background-color: transparent;
+  color: var(--color-text);
+  font-family: var(--font-display);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}

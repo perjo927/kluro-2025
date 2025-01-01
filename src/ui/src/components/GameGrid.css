@@ -1,0 +1,85 @@
+.gamegrid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid-gap);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+}
+
+.game-row {
+  display: flex;
+  gap: var(--grid-gap);
+}
+
+.game-cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: var(--letter-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: var(--transition-smooth);
+
+  .correct {
+    background: radial-gradient(
+      circle at center center,
+      rgb(0 88 0 / 95%) 0%,
+      rgb(0 0 0 / 48%) 100%
+    );
+    color: white;
+    border: 1px outset rgba(0, 128, 0, 0.79);
+    text-shadow: 0px 1px 4px black;
+  }
+
+  .present {
+    background: radial-gradient(
+      circle at center center,
+      rgba(88, 73, 0, 0.95) 0%,
+      rgb(0 0 0 / 48%) 100%
+    );
+    color: white;
+    border: 1px outset rgba(255, 217, 0, 0.5);
+    text-shadow: 0px 1px 4px rgb(52, 37, 0);
+  }
+
+  .absent {
+    background-color: rgba(255, 255, 255, 0.01);
+    color: var(--color-text-muted);
+  }
+
+  .unused {
+    background-color: rgba(255, 255, 255, 0.08);
+    text-shadow: 0px 0px 4px black;
+    color: rgba(255, 255, 255, 0.65);
+  }
+}
+
+.letter {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text);
+  background-color: var(--color-primary);
+  width: 95%;
+  height: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(var(--letter-radius) - 2px);
+  transition: var(--transition-bounce);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+  :root {
+    --cell-size: 3rem;
+  }
+}

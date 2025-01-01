@@ -1,0 +1,37 @@
+.game-container {
+  color: var(--color-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-layout {
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.game-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Add some atmosphere with a subtle gradient background */
+.game-container::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at top right,
+    var(--color-accent) 0%,
+    transparent 70%
+  );
+  opacity: 0.05;
+  pointer-events: none;
+}

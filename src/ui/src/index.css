@@ -1,0 +1,67 @@
+:root {
+  font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Color palette - deep, modern dark theme */
+  --color-background: #0a0a0f;
+  --color-surface: #16161d;
+  --color-primary: #a21398;
+  --color-secondary: #818cf8;
+  --color-accent: #4f46e5;
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+
+  --color-tertiary: #0086b4;
+  --color-quartiary: #6366f1;
+  --color-warning: #af9900;
+
+  /* Typography */
+  --font-main: "Robot Slab", "Inter", system-ui, sans-serif;
+  --font-display: "Robot Slab", "Open Sans", sans-serif;
+
+  /* Animations */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Game grid */
+  --cell-size: 4.5rem;
+  --grid-gap: 0.25rem;
+  --letter-radius: 0.5rem;
+}
+
+body {
+  background: #0a0a0f;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 376px) {
+  :root {
+    font-size: 12px;
+  }
+}
+@media (min-width: 377px) {
+  :root {
+    font-size: 13px;
+  }
+}
+@media (min-width: 425px) {
+  :root {
+    font-size: 14px;
+  }
+}
+@media (min-width: 475px) {
+  :root {
+    font-size: 15px;
+  }
+}
+@media (min-width: 600px) {
+  :root {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,50 @@
+.about-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  padding: 1rem;
+  animation: fade-in 0.3s ease-out;
+  font-family: var(--font-main);
+}
+
+.about-modal {
+  background-color: var(--color-surface);
+  border-radius: 1rem;
+  padding: 0.5rem 2rem 1rem 1rem;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slide-up 0.3s ease-out;
+}
+
+.about-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--color-text);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.about-section {
+  display: grid;
+  place-items: center;
+
+  h3 {
+    color: var(--color-primary);
+    margin-bottom: 0;
+  }
+
+  a {
+    color: var(--color-text);
+  }
+}
