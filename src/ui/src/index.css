@@ -21,8 +21,8 @@
   --color-warning: #af9900;
 
   /* Typography */
-  --font-main: "Robot Slab", "Inter", system-ui, sans-serif;
-  --font-display: "Robot Slab", "Open Sans", sans-serif;
+  --font-main: "Roboto Slab", "Inter", system-ui, sans-serif;
+  --font-display: "Roboto Slab", "Open Sans", sans-serif;
 
   /* Animations */
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

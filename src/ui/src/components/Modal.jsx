@@ -39,7 +39,7 @@ const Modal = ({
 };
 
 const getGameOverMessage = (reason, reasons) => {
-    return "Game Over"
+    return "Spelet är över"
 }
 
 // Specialized Game Over Modal

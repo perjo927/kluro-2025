@@ -8,6 +8,7 @@
   flex-direction: column;
   gap: 0.5rem;
   pointer-events: none;
+  width: 20em;
 }
 
 .toast-message {

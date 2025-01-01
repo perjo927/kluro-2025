@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import WordleEngine from '../engine';
+import WordleEngine from '../lib/engine';
 
 // Helper function to convert game state to visual grid representation
 function visualizeGrid(grid) {

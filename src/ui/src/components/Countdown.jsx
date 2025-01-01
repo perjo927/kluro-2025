@@ -43,15 +43,15 @@ const Countdown = () => {
         <time>
             <span>
                 {time.hours}
-                <small>h</small>
+                <small>TIMMAR</small>
             </span>
             <span>
                 {time.minutes}
-                <small>min</small>
+                <small>MINUTER</small>
             </span>
             <span>
                 {time.seconds}
-                <small>sec</small>
+                <small>SEKUNDER</small>
             </span>
         </time>
     );

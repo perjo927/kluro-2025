@@ -1,7 +1,12 @@
+import words from "../data/words";
+
+const firstIndexDate = 1644534000000;
+const firstDateSinceEpoch = Math.floor(firstIndexDate / 8.64e7);
+
 class WordleEngine {
-    constructor(dailyWord) {
+    constructor(dailyWord, state) {
         this.dailyWord = dailyWord.toUpperCase();
-        this.gameState = {
+        this.gameState = state ?? {
             grid: [],         // Will contain letter placements and feedback
             keyboard: {},     // Will track letter states for keyboard
             isComplete: false,
@@ -44,7 +49,7 @@ class WordleEngine {
         this.gameState.grid[this.gameState.currentRow] = rowFeedback;
 
         // Update keyboard state based on feedback
-        this.updateKeyboardState(normalizedGuess, rowFeedback);
+        this.updateKeyboardState(rowFeedback);
 
         // Check win condition
         const isWin = normalizedGuess === this.dailyWord;
@@ -100,8 +105,7 @@ class WordleEngine {
         }));
     }
 
-    // Update keyboard state based on new feedback
-    updateKeyboardState(guess, rowFeedback) {
+    updateKeyboardState(rowFeedback) {
         // Consider adding a priority map for status updates
         const statusPriority = {
             correct: 3,
@@ -117,12 +121,26 @@ class WordleEngine {
             }
         });
     }
+
     getSerializableState() {
         return JSON.stringify(this.gameState);
     }
 
     loadState(savedState) {
         this.gameState = JSON.parse(savedState);
+    }
+
+    static validateWord(word) {
+        const input = word.toLowerCase();
+        return words.includes(btoa(input));
+    }
+
+    static getTodaysWord() {
+        const now = new Date();
+        const nowSinceEpoch = Math.floor(now / 8.64e7);
+        const diffDays = nowSinceEpoch - firstDateSinceEpoch;
+
+        return { word: atob(words[diffDays]), gameDay: diffDays }
     }
 }
 
