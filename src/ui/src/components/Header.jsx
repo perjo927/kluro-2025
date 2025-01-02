@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import './Header.css';
+import Volume from './Volume';
 
-const Header = ({ onShowAbout }) => {
+const Header = ({ onShowAbout, volumeOff, onVolumeOffToggle }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
         <header className="game-header">
             <div className="header-content">
-                <div style={{ width: "40px" }}>{" "}</div>
+                <div style={{ width: "40px" }}>
+                    <Volume
+                        volumeOff={volumeOff}
+                        onVolumeOffToggle={onVolumeOffToggle} />
+                </div>
                 <h1 className="game-title">
                     🅺🅻🆄🆁🅾
                 </h1>

@@ -1,0 +1,8 @@
+.hidden {
+  display: none;
+}
+.volume {
+  position: relative;
+  left: 1em;
+  cursor: pointer;
+}

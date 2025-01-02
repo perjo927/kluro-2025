@@ -16,6 +16,23 @@ const ANIMATION_TIMINGS = {
     BUFFER: 500               // Safety buffer
 };
 
+const text = new Audio('audio/text.wav');
+const back = new Audio('audio/back.wav');
+const victory = new Audio('audio/victory.wav');
+const wrong = new Audio('audio/wrong.wav');
+const die = new Audio('audio/die.wav');
+const nice = new Audio('audio/nice.wav');
+
+const audio = {
+    text,
+    back,
+    victory,
+    wrong,
+    die,
+    nice
+}
+
+
 class Kluro {
     constructor() {
         let state = null;
@@ -77,10 +94,15 @@ function GameContainer() {
     const [isWon, setIsWon] = useState(false);
     const [currentGuess, setCurrentGuess] = useState("     ");
     const [showConfetti, setShowConfetti] = useState(false);
+    const [volumeOff, setVolumeOff] = useState(true);
 
     const toast = useToast();
 
     const onErase = () => {
+        if (!volumeOff) {
+            audio.back.play();
+        }
+
         const positions = Array(5).fill("");
         const guessPositions = currentGuess.split("");
         const guessCharacters = positions.map((cell, i) => {
@@ -94,6 +116,10 @@ function GameContainer() {
 
     const onBack = () => {
         if (currentGuess.length > 0) {
+            if (!volumeOff) {
+                audio.back.play();
+            }
+
             const positions = Array(5).fill("");
             const guessPositions = currentGuess.split("");
             const guessCharacters = positions.map((cell, i) => {
@@ -127,6 +153,9 @@ function GameContainer() {
         if (currentGuess.length !== 5) {
             toast('Ordets längd måste vara 5 bokstäver', 'error');
             shakeCurrentRow();
+            if (!volumeOff) {
+                audio.wrong.play();
+            }
             return;
         }
 
@@ -134,12 +163,19 @@ function GameContainer() {
         if (!WordleEngine.validateWord(currentGuess)) {
             toast('Ordet finns inte i ordlistan', 'error');
             shakeCurrentRow();
+            if (!volumeOff) {
+                audio.wrong.play();
+            }
             return;
         }
 
         try {
             // Make the guess
             const newState = game.makeGuess(currentGuess);
+
+            if (!volumeOff) {
+                audio.nice.play();
+            }
 
             // Update last played date
             const today = new Date().toDateString();
@@ -149,6 +185,16 @@ function GameContainer() {
             // use our new handler for game over state
             if (newState.isComplete) {
                 handleGameOver(newState);
+
+                if (newState.isWon) {
+                    if (!volumeOff) {
+                        audio.victory.play();
+                    }
+                } else {
+                    if (!volumeOff) {
+                        audio.die.play();
+                    }
+                }
             } else {
                 // For non-game-over states, update immediately
                 setGameState(newState);
@@ -178,6 +224,10 @@ function GameContainer() {
 
         // Handle the key press
         if (activeMarker < 5) {
+            if (!volumeOff) {
+                audio.text.play();
+            }
+
             const nextGuess = Array(5).fill("");
             const guessPositions = currentGuess.split("");
 
@@ -321,6 +371,8 @@ function GameContainer() {
             <Confetti isActive={showConfetti} />
             <Header
                 onShowAbout={() => setShowAbout(true)}
+                volumeOff={volumeOff}
+                onVolumeOffToggle={(v) => setVolumeOff(v)}
             />
             <div className="game-container">
                 <main className="game-layout">
