@@ -15,27 +15,31 @@
   display: flex;
   gap: var(--grid-gap);
 
-  &.current {
+  &.current:not(.isWon) {
     cursor: pointer;
     position: relative;
   }
 
-  &.current .game-cell:hover {
+  &.current:not(.isWon) .game-cell:hover {
     box-shadow: 0px 0px 2px 4px #ffffffb5;
   }
 
-  &.current .game-cell.active {
+  &.current:not(.isWon) .game-cell.selected {
+    border: 1px solid #ffffffb5;
+  }
+
+  &.current:not(.isWon) .game-cell.active {
     animation: activePulse 1s infinite;
   }
 
-  &.current .game-cell.erase {
+  &.current:not(.isWon) .game-cell .erase {
     cursor: pointer;
     border: none;
     z-index: 100;
     position: absolute;
     top: -1em;
     right: -1em;
-    font-size: 1em;
+    font-size: 1.5em;
     border-radius: 50%;
     background-color: #ff04049c;
     box-shadow: 0px 0px 1px 2px #e30000dc;
@@ -44,10 +48,13 @@
     font-weight: 500;
     padding: 0em;
     line-height: 1em;
+    display: grid;
+    place-items: center;
   }
 
-  &.current .game-cell.erase:hover {
-    background-color: #ff04069c;
+  &.current:not(.isWon) .game-cell .erase:hover {
+    background-color: #ff0404;
+    font-size: 1.52em;
   }
 }
 
@@ -65,8 +72,8 @@
   .correct {
     background: radial-gradient(
       circle at center center,
-      rgb(0 88 0 / 95%) 0%,
-      rgb(0 0 0 / 48%) 100%
+      rgb(5 150 5 / 95%) 0%,
+      rgb(0 0 0 / 50%) 100%
     );
     color: white;
     border: 1px outset rgba(0, 128, 0, 0.79);
@@ -76,8 +83,8 @@
   .present {
     background: radial-gradient(
       circle at center center,
-      rgba(88, 73, 0, 0.95) 0%,
-      rgb(0 0 0 / 48%) 100%
+      rgba(150, 125, 0, 0.95) 0%,
+      rgb(0 0 0 / 50%) 100%
     );
     color: white;
     border: 1px outset rgba(255, 217, 0, 0.5);
@@ -119,16 +126,12 @@
   transform-style: preserve-3d;
 }
 
-.letter.reveal {
-  animation: flipIn 0.6s ease-in-out forwards;
-}
-
-.letter.pending-reveal {
+.game-cell.pending-reveal {
   opacity: 0;
   transition: opacity 0.1s ease-out;
 }
 
-.letter.revealing {
+.game-cell.revealing {
   animation: flipIn 0.6s ease-in-out forwards;
 }
 
@@ -155,20 +158,21 @@
     border-bottom: 0.1em solid #3a3a3c;
   }
 }
+
 @keyframes flipIn {
   0% {
-    transform: rotateX(0deg) scale(1);
+    transform: rotateY(0deg) scale(1);
     background-color: rgba(255, 255, 255, 0.03);
   }
   45% {
-    transform: rotateX(-90deg) scale(1.1);
+    transform: rotateY(-90deg) scale(1.1);
     background-color: rgba(255, 255, 255, 0.03);
   }
   55% {
-    transform: rotateX(-90deg) scale(1.1);
+    transform: rotateY(-90deg) scale(1.1);
   }
   100% {
-    transform: rotateX(0deg) scale(1);
+    transform: rotateY(0deg) scale(1);
   }
 }
 

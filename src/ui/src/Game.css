@@ -28,9 +28,9 @@
   right: 0;
   bottom: 0;
   background: radial-gradient(
-    circle at top right,
+    circle at center center,
     var(--color-accent) 0%,
-    transparent 70%
+    transparent 0%
   );
   opacity: 0.05;
   pointer-events: none;

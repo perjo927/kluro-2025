@@ -19,8 +19,8 @@
   .correct {
     background: radial-gradient(
       circle at center center,
-      rgb(0 88 0 / 95%) 0%,
-      rgb(0 0 0 / 48%) 100%
+      rgb(5 150 5 / 95%) 0%,
+      rgb(0 0 0 / 50%) 100%
     );
     color: white;
     border: 1px outset rgba(0, 128, 0, 0.79);
@@ -30,8 +30,8 @@
   .present {
     background: radial-gradient(
       circle at center center,
-      rgba(88, 73, 0, 0.95) 0%,
-      rgb(0 0 0 / 48%) 100%
+      rgba(150, 125, 0, 0.95) 0%,
+      rgb(0 0 0 / 50%) 100%
     );
     color: white;
     border: 1px outset rgba(255, 217, 0, 0.5);
@@ -81,10 +81,10 @@
 @media screen and (min-width: 651px) {
   .alphabet {
     grid-template-columns: repeat(11, 3.4em);
-    gap: 0.45em;
+    gap: 0.4em;
   }
   .alphabet span {
-    font-size: 1.5em;
+    font-size: 1.4em;
     height: 5vh;
   }
 }

@@ -58,12 +58,12 @@ function Keyboard({ gameState, onBack, onEnter, onPressKey }) {
             {keys.map(({ key, isEnter, isBack }) => (
                 <React.Fragment key={key}>
                     {isEnter && (
-                        <span className="enter" onClick={onEnter}>
+                        <span className="enter" onClick={() => onEnter()}>
                             ENTER
                         </span>
                     )}
                     {isBack && (
-                        <span className="back" onClick={onBack}>
+                        <span className="back" onClick={() => onBack()}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 height="24"
