@@ -177,6 +177,8 @@ function GameContainer() {
                 audio.nice.play();
             }
 
+            let newCurrentGuess = "     "
+
             // Update last played date
             const today = new Date().toDateString();
             localStorage.setItem('lastPlayedDate', today);
@@ -184,6 +186,7 @@ function GameContainer() {
             // Instead of updating everything immediately,
             // use our new handler for game over state
             if (newState.isComplete) {
+                newCurrentGuess = "";
                 handleGameOver(newState);
 
                 if (newState.isWon) {
@@ -201,7 +204,7 @@ function GameContainer() {
                 setCurrentRow(newState.currentRow);
             }
 
-            setCurrentGuess("     ");
+            setCurrentGuess(newCurrentGuess);
             setActiveMarker(0);
             localStorage.setItem('gameState', game.getSerializableState());
 
@@ -327,6 +330,9 @@ function GameContainer() {
         setCurrentRow(kluro.game.gameState.currentRow);
         setShowGameOver(kluro.game.gameState.isComplete);
         setIsWon(kluro.game.gameState.isWon);
+        if (kluro.game.gameState.isComplete) {
+            setCurrentGuess("");
+        }
 
         return () => { }
     }, []);
