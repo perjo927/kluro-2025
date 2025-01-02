@@ -16,12 +16,12 @@ const ANIMATION_TIMINGS = {
     BUFFER: 500               // Safety buffer
 };
 
-const text = new Audio('audio/text.wav');
-const back = new Audio('audio/back.wav');
-const victory = new Audio('audio/victory.wav');
-const wrong = new Audio('audio/wrong.wav');
-const die = new Audio('audio/die.wav');
-const nice = new Audio('audio/nice.wav');
+const text = new Audio('text.wav');
+const back = new Audio('back.wav');
+const victory = new Audio('victory.wav');
+const wrong = new Audio('wrong.wav');
+const die = new Audio('die.wav');
+const nice = new Audio('nice.wav');
 
 const audio = {
     text,
