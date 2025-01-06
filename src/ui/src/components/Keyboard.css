@@ -19,18 +19,18 @@
   .correct {
     background: radial-gradient(
       circle at center center,
-      rgb(5 150 5 / 95%) 0%,
+      rgb(5 170 5 / 95%) 0%,
       rgb(0 0 0 / 50%) 100%
     );
     color: white;
-    border: 1px outset rgba(0, 128, 0, 0.79);
+    border: 1px outset rgba(0, 170, 0, 0.8);
     text-shadow: 0px 1px 4px black;
   }
 
   .present {
     background: radial-gradient(
       circle at center center,
-      rgba(150, 125, 0, 0.95) 0%,
+      rgba(150, 140, 0, 0.95) 0%,
       rgb(0 0 0 / 50%) 100%
     );
     color: white;
@@ -39,12 +39,12 @@
   }
 
   .absent {
-    background-color: rgba(255, 255, 255, 0.01);
+    background-color: rgba(255, 255, 255, 0.03);
     color: var(--color-text-muted);
   }
 
   .unused {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.11);
     text-shadow: 0px 0px 4px black;
     color: rgba(255, 255, 255, 0.65);
   }
@@ -61,7 +61,7 @@
   height: 3.8em;
   border-radius: 4px;
   color: var(--color-text-muted);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.09);
 }
 
 .alphabet span:hover {
