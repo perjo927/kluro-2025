@@ -15,6 +15,11 @@ class WordleEngine {
             revealedWord: null
         };
 
+
+        if (Object.keys(this.gameState.keyboard).length > 0) {
+            return;
+        }
+
         // Initialize keyboard state for all Swedish letters
         'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ'.split('').forEach(letter => {
             this.gameState.keyboard[letter] = 'unused'; // Other states: 'correct', 'present', 'absent'
