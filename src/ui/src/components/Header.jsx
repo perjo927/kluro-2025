@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Header.css';
 import Volume from './Volume';
 
-const Header = ({ onShowAbout, volumeOff, onVolumeOffToggle }) => {
+const Header = ({ onShowAbout, onShareDebug, onHardReload, volumeOff, onVolumeOffToggle }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
@@ -28,7 +28,6 @@ const Header = ({ onShowAbout, volumeOff, onVolumeOffToggle }) => {
 
             <div className={`menu-panel ${isMenuOpen ? 'open' : ''}`}>
                 <nav className="menu-nav">
-
                     <button
                         className="menu-item"
                         onClick={() => {
@@ -38,6 +37,20 @@ const Header = ({ onShowAbout, volumeOff, onVolumeOffToggle }) => {
                     >
                         <span className="menu-icon-about">👨‍💻</span>
                         About
+                    </button>
+                    <button
+                        className="menu-item"
+                        onClick={onShareDebug}
+                    >
+                        <span className="menu-icon-debug">🤖</span>
+                        Debug
+                    </button>
+                    <button
+                        className="menu-item"
+                        onClick={onHardReload}
+                    >
+                        <span className="menu-icon-power-tools">🛠️</span>
+                        Hard Reload
                     </button>
                 </nav>
             </div>

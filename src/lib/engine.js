@@ -1,7 +1,7 @@
 import words from "../data/words";
 
-const firstIndexDate = 1644534000000;
-const firstDateSinceEpoch = Math.floor(firstIndexDate / 8.64e7);
+// Reference date when the game started (adjust this based on your actual start date)
+const GAME_START_DATE = new Date('2022-02-10'); // This matches your firstIndexDate
 
 class WordleEngine {
     constructor(dailyWord, state) {
@@ -140,13 +140,49 @@ class WordleEngine {
         return words.includes(btoa(input));
     }
 
-    static getTodaysWord() {
-        const now = new Date();
-        const nowSinceEpoch = Math.floor(now / 8.64e7);
-        const diffDays = nowSinceEpoch - firstDateSinceEpoch;
+    /**
+        * Gets the word for a specific date in the player's local timezone
+        * @param {Date} date - The date to get the word for (defaults to current date)
+        * @returns {{word: string, gameDay: number}} The word and day number
+        */
+    static getWordForDate(date = new Date()) {
+        // Normalize the date to midnight in the local timezone
+        const normalizedDate = new Date(date);
+        normalizedDate.setHours(0, 0, 0, 0);
 
-        return { word: atob(words[diffDays]), gameDay: diffDays }
+        // Calculate days since game start
+        const msPerDay = 24 * 60 * 60 * 1000;
+        const gameStartNormalized = new Date(GAME_START_DATE);
+        gameStartNormalized.setHours(0, 0, 0, 0);
+
+        const daysSinceStart = Math.floor(
+            (normalizedDate - gameStartNormalized) / msPerDay
+        );
+
+        // Ensure we're not going backwards in time
+        if (daysSinceStart < 0) {
+            throw new Error('Date is before game start');
+        }
+
+        // Get word from array using the day number as index
+        const wordIndex = daysSinceStart % words.length;
+
+        return {
+            word: atob(words[wordIndex]),
+            gameDay: daysSinceStart
+        };
+    }
+
+    /**
+     * Gets today's word in the player's local timezone
+     * @returns {{word: string, gameDay: number}} Today's word and day number
+     */
+    static getTodaysWord() {
+        return WordleEngine.getWordForDate(new Date());
     }
 }
 
 export default WordleEngine
+
+// const testDate = new Date("2025-02-08");
+// console.log(WordleEngine.getWordForDate(testDate));

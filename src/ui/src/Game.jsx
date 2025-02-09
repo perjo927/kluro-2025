@@ -53,6 +53,10 @@ class Kluro {
 
         const { word, gameDay } = WordleEngine.getTodaysWord();
 
+        this.debugLastPlayed = lastPlayed;
+        this.debugToday = today;
+        this.debugState = state;
+
         this.gameDay = gameDay;
         this.game = new WordleEngine(word.toUpperCase(), state);
     }
@@ -97,6 +101,44 @@ function GameContainer() {
     const [volumeOff, setVolumeOff] = useState(true);
 
     const toast = useToast();
+
+    const hardReload = () => {
+        localStorage.removeItem('lastPlayedDate');
+        localStorage.removeItem("gameState")
+        window.location.reload();
+    }
+
+    const shareDebug = () => {
+        const shareTime = {
+            date: new Date(), sinceEpoch: new Date().getTime()
+        }
+        const result = JSON.stringify({
+            ...shareTime,
+            ...kluro
+        })
+
+        if (navigator.canShare) {
+            navigator.share({
+                title: "Dela med Per",
+                text: result,
+                url: window.location.href
+            })
+                .then(() => {
+                    toast('Delades med Per! 📋', 'success');
+                })
+                .catch((e) => {
+                    console.error(e);
+                })
+        }
+        navigator.clipboard.writeText(result)
+            .then(() => {
+                toast('Delades med Per! 📋', 'success');
+            })
+            .catch((e) => {
+                console.error(e);
+                toast('Kunde inte dela med Per', 'error');
+            });
+    }
 
     const onErase = () => {
         if (!volumeOff) {
@@ -259,6 +301,19 @@ function GameContainer() {
     const handleShareResult = () => {
         const result = kluro.getShareableResult(gameState);
 
+        if (navigator.canShare) {
+            navigator.share({
+                title: "Dela resultat",
+                text: result,
+                url: window.location.href
+            })
+                .then(() => {
+                    toast('Resultatet delades! 📋', 'success');
+                })
+                .catch((e) => {
+                    console.error(e);
+                })
+        }
         navigator.clipboard.writeText(result)
             .then(() => {
                 toast('Resultatet kopierades! 📋', 'success');
@@ -377,6 +432,8 @@ function GameContainer() {
             <Confetti isActive={showConfetti} />
             <Header
                 onShowAbout={() => setShowAbout(true)}
+                onShareDebug={shareDebug}
+                onHardReload={hardReload}
                 volumeOff={volumeOff}
                 onVolumeOffToggle={(v) => setVolumeOff(v)}
             />
